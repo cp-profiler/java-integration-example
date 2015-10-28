@@ -11,32 +11,26 @@ public class RestartsExample {
     /// Connect to port 6565 (default for cp-profiler)
     c.connect(6565);
 
-    /// Starting a new tree (also used in case of a restart)
+    /// Initiate restarts
     c.restart(0);
 
+    c.createNode(0, -1, -1, 2, Connector.NodeStatus.BRANCH).setLabel("root-1").setRestartId(0).send();
+    c.createNode(1, 0, 0, 0, Connector.NodeStatus.FAILED).setLabel("a").setRestartId(0).send();
+    c.createNode(2, 0, 1, 0, Connector.NodeStatus.FAILED).setLabel("b").setRestartId(0).send();
 
-    /// SEND ROOT NODE
-    /// Arguments:
-    /// 1. 0 -- node index;
-    /// 2. -1 -- parent's index (-1 indicates that the parent does not exist)
-    /// 3. -1 -- parent's current alternative (normally starts with 0, but -1 as irrelevant here)
-    /// 4.  2 -- number of children nodes (as in binary tree)
-    /// 5.  Connector.NodeStatus.BRANCH -- decision node / node with children
-    /// The rest of fields are optional and can be specified in arbitrary order
-    c.createNode(0, -1, -1, 2, Connector.NodeStatus.BRANCH).setLabel("root-1").send();
-
-    // SEND LEFT CHILD
-    c.createNode(1, 0, 0, 0, Connector.NodeStatus.FAILED).setLabel("a").send();
-
-    // SEND RIGHT CHILD
-    // "Info" field is specified, which is arbitrary text to go along with the node
-    c.createNode(2, 0, 1, 0, Connector.NodeStatus.FAILED).setLabel("b").setInfo("some info").send();
-
+    /// Restart happens
     c.restart(1);
 
     c.createNode(0, -1, -1, 2, Connector.NodeStatus.BRANCH).setLabel("root-2").setRestartId(1).send();
     c.createNode(1, 0, 0, 0, Connector.NodeStatus.SOLVED).setLabel("c").setRestartId(1).send();
     c.createNode(2, 0, 1, 0, Connector.NodeStatus.FAILED).setLabel("d").setRestartId(1).send();
+
+    /// Restart happens
+    c.restart(2);
+
+    c.createNode(0, -1, -1, 2, Connector.NodeStatus.BRANCH).setLabel("root-2").setRestartId(2).send();
+    c.createNode(1, 0, 0, 0, Connector.NodeStatus.FAILED).setLabel("e").setRestartId(2).send();
+    c.createNode(2, 0, 1, 0, Connector.NodeStatus.FAILED).setLabel("f").setRestartId(2).send();
 
     c.disconnect();
   }

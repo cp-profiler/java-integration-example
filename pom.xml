@@ -15,7 +15,7 @@
 
   <build>
 
-    <finalName>simple-example</finalName>
+    <finalName>restart-example</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -24,7 +24,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>com.github.cpprofiler.SimpleExample</mainClass>
+              <mainClass>com.github.cpprofiler.RestartsExample</mainClass>
             </manifest>
           </archive>
          </configuration>
