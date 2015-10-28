@@ -3,7 +3,7 @@ package com.github.cpprofiler;
 import com.github.cpprofiler.Connector;
 import org.zeromq.ZMQ;
 
-public class Example {
+public class SimpleExample {
   public static void main (String args[]) {
 
     Connector c = new Connector();
@@ -26,7 +26,7 @@ public class Example {
     c.createNode(0, -1, -1, 2, Connector.NodeStatus.BRANCH).send();
 
     // SEND LEFT CHILD
-    c.createNode(1, 0, 0, 0, Connector.NodeStatus.SOLVED).setLabel("a").send();
+    c.createNode(1, 0, 0, 0, Connector.NodeStatus.SOLVED).setLabel("a").setRestartId(-1).send();
 
     // SEND RIGHT CHILD
     // "Info" field is specified, which is arbitrary text to go along with the node
